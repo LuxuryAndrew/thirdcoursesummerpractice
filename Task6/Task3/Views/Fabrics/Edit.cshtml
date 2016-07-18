@@ -1,0 +1,111 @@
+﻿@model Task3.Models.Fabric
+@using Newtonsoft.Json
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Collage in process!</title>
+    @*@Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/fabric")
+    @Styles.Render("~/Content/fabric")*@
+    <script src="/Scripts/modernizr-2.6.2.js"></script>
+    <script src="/Scripts/fabric/jquery.min.js"></script>
+    <script src="/Scripts/fabric/fabric.min.js"></script>
+    <script src="/Scripts/fabric/script.js"></script>
+    <link href="/Content/fabric/style.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <script type="text/javascript">
+        var _model = @Html.Raw(Json.Encode(Model));
+    </script>
+
+    <link rel="home" id="bg" href="@Url.Content("~/Content/fabrics/default/background/default.jpg")" />
+    <link rel="home" id="texture" href="@Url.Content("~/Content/fabric/bg.png")" />
+</head>
+<body>
+    <h1>Show the beauty</h1>
+    <center>
+        <div id="canvas-container">
+            <canvas id="c" width="1000" height="600" ondrop="drop(event)" ondragover="allowDrop(event)"></canvas>
+        </div>
+    </center>
+    <br />
+    <aside class="backgrounds">
+        <div class="bg-imgs">
+            <h2>Backgrounds</h2>
+            @for (int i = 1; i < 29; i++)
+            {
+                <img src = "@Url.Content("~/Content/fabrics/default/background/" + i + ".jpg")" alt = "" />
+            }
+            <br />
+        </div>
+    </aside>
+    <a class="greenBtn" onclick="saveAsFile();">Download</a>
+    <button id="fileupload" class="greenBtn">
+        <input type="file" id="fileinput" accept="image/*" onchange="uploadImage(this);"/>
+        <span>Upload</span>
+    </button>
+    @using (Html.BeginForm(new { id = "saveForm" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(modelItem => Model.Id)
+        @Html.Hidden("JSONContent", "")
+        @Html.Hidden("thumbnail", "")
+        <input type="submit" value="Save" class="greenBtn" onclick="save();"/>
+    }
+    <a href="@Url.Action("Index")" class="greenBtn">Back</a>
+    <aside class="controls">
+        <div class="filter-controls">
+            <h2>Filters</h2>
+            <p>
+                <label><span>Grayscale:</span> <input type="checkbox" class="filter" onclick="toggleGray(this);" disabled></label>
+            </p>
+            <p>
+                <label><span>Sepia:</span> <input type="checkbox" class="filter" onclick="toggleSepia(this);" disabled></label>
+            </p>
+            <p>
+                <label><span>Sepia 2:</span> <input type="checkbox" class="filter" onclick="toggleSepia2(this);" disabled></label>
+            </p>
+            <p>
+                <label><span>High contrast:</span> <input type="checkbox" class="filter" onclick="toggleContrast(this);" disabled></label>
+            </p>
+        </div>
+        <div class="draw-controls">
+            <h2>Free Drawing</h2>
+            <br />
+            <button id="drawing-mode" class="btn btn-info" style="height:20px;">Enter drawing mode</button>
+            <br /><br />
+            <div id="drawing-mode-options">
+                <label for="drawing-line-width">Line width:</label>
+                <span class="info">30</span><input type="range" value="30" min="0" max="150" id="drawing-line-width"><br>
+
+                <label for="drawing-color">Line color:</label>
+                <input type="color" value="#8c2dad" id="drawing-color"><br>
+                <br />
+            </div>
+        </div>
+        <div class="buttons">
+            <ul>
+                <li class="remove"></li>
+                <li class="top"></li>
+                <li class="up"></li>
+                <li class="down"></li>
+                <li class="bot"></li>
+            </ul>
+        </div>
+    </aside>
+    <footer class="search">
+        <form action="#" id="searchForm">
+            <input type="text" name="q" value="kitten" />
+            <input type="submit" value="search" />
+        </form>
+        <div id="loading-img">
+            <img src="@Url.Content("~/Content/fabric/preloader.gif")" alt="" />
+        </div>
+        <div id="images">
+            <ul></ul>
+        </div>
+    </footer>
+</body>
+</html>

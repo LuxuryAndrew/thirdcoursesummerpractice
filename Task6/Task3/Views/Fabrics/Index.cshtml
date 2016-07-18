@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Task3.Models.Fabric>
+
+@{
+    ViewBag.Title = "My collages";
+}
+
+@{
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h4>Success!</h4>
+            <p>@ViewBag.Message</p>
+        </div>
+    }
+}
+@Scripts.Render("~/bundles/jquery")
+<style>
+    .btn-control {
+        width: 100px;
+    }
+</style>
+<script>
+    function setDefaultThumbnail(img) {
+        img.src = "@Url.Content("~/Content/fabrics/default/thumbnail.jpg")";
+    }
+
+    function downloadCollage(id) {
+        var link = document.createElement('a');
+        link.download = "mycollage" + id + ".png";
+        link.href = "@Url.Content("~/Content/fabrics/")" + id + "/thumbnail.png";
+        link.click();
+    }
+</script>
+
+<h2>My collages</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+    
+<table class="table table-hover item-list">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="active">
+                <td>
+                    <img src="@Url.Content("~/Content/fabrics/" + item.Id.ToString() + "/thumbnail.png")" onerror="setDefaultThumbnail(this);" width="1000" height="600" />
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-control btn-download" onclick="downloadCollage(@item.Id)">Download</a>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary btn-control" })
+                    @using (Html.BeginForm("Index", "Fabrics", new { id = item.Id }, FormMethod.Post, new { onsubmit = "return confirm('Are you sure?');" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Delete" class="btn btn-warning btn-control" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
