@@ -51,20 +51,6 @@ namespace Task3
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",
             //    clientSecret: "");
-
-            app.UseTwitterAuthentication(
-               consumerKey: "RKNF9u1oSmjCIb4tdVO8aZE93",
-               consumerSecret: "2A6AJoU1Bn1FTpQAPWq5m9xkwKYnVo1abvqurEvGm0oiAkwDHY");
-
-            app.UseFacebookAuthentication(
-               appId: "404716249729610",
-               appSecret: "e08cc9022de00dcc13b219015128fe38");
-
-            app.UseVkontakteAuthentication("5033403", "aCDgMQqkxkcTC0iT2dT3", "scope=email");
-
-            app.UseGitHubAuthentication("291b136230cda46b706f", "64936068f2663318e18f45a0d96744dd1920fd54");
-
-            app.UseInstagramInAuthentication("42df8d7d3bc845eeb3ad579ca5d35822", "c4330872c19d47aaaced6a51d2f07c22");
         }
     }
 }

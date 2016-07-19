@@ -339,9 +339,6 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <Content Include="Content\fabric\Lakesight_PersonalUseOnly.ttf" />
-    <None Include="Properties\PublishProfiles\nikita.pubxml" />
-    <None Include="Properties\PublishProfiles\nikitadmitrycollage - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\nikitadmitrycollage - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fabric\fabric.min.js" />
     <Content Include="Scripts\fabric\jquery.min.js" />
